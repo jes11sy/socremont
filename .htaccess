@@ -1,0 +1,27 @@
+# Включаем модуль перезаписи URL
+RewriteEngine On
+
+# Правило для обработки URL с префиксами городов
+# Пример: /saratov/index.html -> /index.html
+# Пример: /ulyanovsk/remont-stiralnoj-mashiny.html -> /remont-stiralnoj-mashiny.html
+
+# Список городов (можно добавить больше)
+RewriteCond %{REQUEST_URI} ^/(saratov|ulyanovsk)/(.+)$ [NC]
+RewriteRule ^(saratov|ulyanovsk)/(.+)$ $2 [L]
+
+# Если запрашивается только город без страницы (/saratov или /ulyanovsk)
+# Перенаправляем на главную страницу с сохранением префикса города
+RewriteCond %{REQUEST_URI} ^/(saratov|ulyanovsk)/?$ [NC]
+RewriteRule ^(saratov|ulyanovsk)/?$ /index.html [L]
+
+# Если файл существует, отдаем его как есть
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule . - [L]
+
+# Если директория существует, отдаем её как есть
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule . - [L]
+
+# Для всех остальных запросов (если нужно)
+# Можно добавить дополнительные правила здесь
+

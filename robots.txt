@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Запрещаем индексацию служебных файлов
+Disallow: /config.js
+Disallow: /*.md
+Disallow: /CITY_*.md
+Disallow: /TELEGRAM_*.md
+
+# Разрешаем индексацию всех HTML страниц
+Allow: /*.html
+
+# Указываем расположение sitemap
+Sitemap: https://социальный-ремонт.рф/sitemap.xml
+
