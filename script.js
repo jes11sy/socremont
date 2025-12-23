@@ -120,13 +120,17 @@ function initMobileMenu() {
 
 // Modal for callback
 function initModal() {
+    // Кнопки, которые должны открывать модалку обратного звонка
     const callbackBtns = document.querySelectorAll('.btn-callback');
     const mobileCallbackBtn = document.querySelector('.header__mobile-callback');
     const modal = document.getElementById('callbackModal');
     const successModal = document.getElementById('successModal');
     
     const openModal = function(e) {
-        if (e) e.preventDefault();
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         if (modal) {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -140,14 +144,13 @@ function initModal() {
         }
     };
     
-    // Открытие модалки для всех кнопок обратного звонка
-    callbackBtns.forEach(btn => {
-        btn.addEventListener('click', openModal);
+    // Делегируем клик, чтобы отработали и динамические элементы (например, клоны Swiper)
+    document.addEventListener('click', function(e) {
+        const target = e.target.closest('.btn-callback, .masters-slider__button, [data-modal-target="callbackModal"]');
+        if (target) {
+            openModal(e);
+        }
     });
-    
-    if (mobileCallbackBtn) {
-        mobileCallbackBtn.addEventListener('click', openModal);
-    }
     
     // Закрытие всех модалок по кнопке закрытия
     document.querySelectorAll('.custom-modal__close-button, .modal-close').forEach(btn => {
